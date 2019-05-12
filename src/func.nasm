@@ -4,7 +4,12 @@ global f1
 global f2
 global f3
 
-section .data
+global a
+global b
+
+section .rodata
+    a dq -0.5
+    b dq 3.0
     const1 dq 2.0
 
 

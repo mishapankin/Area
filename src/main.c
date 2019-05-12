@@ -4,6 +4,9 @@
 #include "func.h"
 #include "methods.h"
 
+extern const double a;
+extern const double b;
+
 typedef struct {
 	func_t f, g;
 	double x;
@@ -20,7 +23,7 @@ void sort_fig(Fig *fig1, Fig *fig2) {
 int main(int argc, char** argv) {
 	INIT_FPU();
 
-	double a = -0.5, b = 3.0, eps = 1e-4;
+	double eps = 1e-4;
 
 	Fig	fig1 = {f1, f2, root(f1, f2, a, b, eps)},
 		fig2 = {f2, f3, root(f2, f3, a, b, eps)},
