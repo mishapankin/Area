@@ -18,6 +18,7 @@ void sort_fig(Fig *fig1, Fig *fig2) {
 }
 
 int main(int argc, char** argv) {
+	INIT_FPU();
 
 	double a = -0.5, b = 3.0, eps = 1e-4;
 
