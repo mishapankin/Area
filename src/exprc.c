@@ -1,33 +1,28 @@
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "expr_tree.h"
-
-void make_asm(double a, double b, FILE *fout) {
-    fprintf(fout, "global FINIT\n\nglobal f1\nglobal f2\nglobal f3\n\n");
-    fprintf(fout, "global a\nglobal b\n\n");
-    fprintf(fout, "section .rodata\n");
-
-    fprintf(fout, "\ta dq %lf\n", a);
-    fprintf(fout, "\tb dq %lf\n", b);
-}
+#include "make_asm.h"
+#include "make_js.h"
 
 void compile(FILE *fin, FILE *fout, FILE *js) {
     double a, b;
     fscanf(fin, "%lf%lf\n", &a, &b);
 
     char buff[100];
-    fgets(buff, 100, fin);
-    fgets(buff, 100, fin);
-    
-    // fprintf(js, "expr1 = %s", buff);
 
     fgets(buff, 100, fin);
-    Node *tree = parse_string(buff);
-    fprintf(js, "expr2 = '");
-    print_tree(js, tree, 0);
-    fprintf(js, "'");
+    Node *tree1 = parse_string(buff);
+    fgets(buff, 100, fin);
+    Node *tree2 = parse_string(buff);
+    fgets(buff, 100, fin);
+    Node *tree3 = parse_string(buff);
 
-    // fprintf(js, "expr3 = %s", buff);
+    make_js(a, b, tree1, tree2, tree3, js);
+
+    // free(tree1);
+    // free(tree2);
+    // free(tree3);
 }
 
 int main(int argv, char** argc) {
