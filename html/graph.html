@@ -6,20 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <style>
-        #calculator {
-            width: 700px;
-            height: 700px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://www.desmos.com/api/v1.2/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+    <script src="expr.js"></script>
 </head>
 <body>
     <div id="calculator"></div>
-    <script>
-        var elt = document.getElementById('calculator');
-        var calculator = Desmos.GraphingCalculator(elt);
-        calculator.setExpression({id:'graph1', latex:'\integral_0^1 sin(x)'});
-    </script>
+    <script src = "make_graph.js"></script>
 </body>
 </html>

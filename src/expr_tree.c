@@ -64,8 +64,6 @@ Node* parse_string(const char* str) {
             shift += n;
         } else { break; }
     }
-    printf("%d\n", cnt);
-
     nodes = realloc(nodes, cnt * sizeof(Node));
 
     Node **stack = malloc(cnt * sizeof(Node));
@@ -117,7 +115,7 @@ void print_tree(FILE *fout, Node *n, int parentheses) {
         default:
             break;
         }
-        if (!parentheses) { fprintf(stdout, " "); }
+        if (!parentheses) { fprintf(fout, " "); }
     } else if (arg_count(n->token) == 1) {
         switch (n->token) {
         case SIN:
