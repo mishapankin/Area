@@ -14,12 +14,18 @@ void compile(FILE *fin, FILE *fout) {
 }
 
 int main(int argv, char** argc) {
-    FILE *fin = fopen(argc[1], "r"), *fout = fopen(argc[2], "w");
+    // FILE *fin = fopen(argc[1], "r"), *fout = fopen(argc[2], "w");
 
-    compile(fin, fout);
+    // compile(fin, fout);
 
-    fclose(fin);
-    fclose(fout);
+    // fclose(fin);
+    // fclose(fout);
+
+    char buff[100];
+    fgets(buff, 100, stdin);
+
+    Node* nodes = parse_string(buff);
+    print_tree(stdout, nodes, 0);
 
     return 0;
 }
