@@ -11,7 +11,7 @@ section .rodata
 	a dq -0.500000
 	b dq 3.000000
 
-	const0 dq 2.000000
+	const0 dq 0.000000
 	const1 dq -0.100000
 	const2 dq 2.000000
 
@@ -23,19 +23,8 @@ INIT_FPU:
 f1:
 	push ebp
 	mov ebp, esp
-	fldpi
-	sub esp, 8
-	fstp qword[esp]
 	fld qword[const0]
 	sub esp, 8
-	fstp qword[esp]
-	fld qword[esp + 8]
-	fld qword[esp]
-	fdivp
-	add esp, 8
-	fstp qword[esp]
-	fld qword[esp]
-	fsin
 	fstp qword[esp]
 	fld qword[esp]
 	mov esp, ebp

@@ -30,17 +30,17 @@ int read_node(Node* node, const char *str) {
             node->token = T_MUL;
         } else if (!strcmp(buff, "/")) {
             node->token = T_DIV;
-        } else if (!strcmp(buff, "sin")) {
+        } else if (!strcmp(buff, "\\sin")) {
             node->token = T_SIN;
-        } else if (!strcmp(buff, "cos")) {
+        } else if (!strcmp(buff, "\\cos")) {
             node->token = T_COS;
-        } else if (!strcmp(buff, "tan")) {
+        } else if (!strcmp(buff, "\\tan")) {
             node->token = T_TAN;
-        } else if (!strcmp(buff, "ctg")) {
+        } else if (!strcmp(buff, "\\ctg")) {
             node->token = T_CTG;
-        } else if (!strcmp(buff, "e")) {
+        } else if (!strcmp(buff, "\\e")) {
             node->token = T_E;
-        } else if (!strcmp(buff, "pi")) {
+        } else if (!strcmp(buff, "\\pi")) {
             node->token = T_PI;
         } else if (!strcmp(buff, "x")) {
             node->token = T_X;
