@@ -14,7 +14,7 @@ int read_node(Node* node, const char *str) {
     int n;
     double cnst;
     if (sscanf(str, "%lf%n", &cnst, &n) == 1) {
-        node->token = CONST;
+        node->token = T_CONST;
         node->constant = cnst;
         return n;
     }
@@ -23,27 +23,27 @@ int read_node(Node* node, const char *str) {
 
     if (sscanf(str, "%s%n", buff, &n) == 1) {
         if (!strcmp(buff, "+")) {
-            node->token = ADD;
+            node->token = T_ADD;
         } else if (!strcmp(buff, "-")) {
-            node->token = SUB;
+            node->token = T_SUB;
         } else if (!strcmp(buff, "*")) {
-            node->token = MUL;
+            node->token = T_MUL;
         } else if (!strcmp(buff, "/")) {
-            node->token = DIV;
+            node->token = T_DIV;
         } else if (!strcmp(buff, "sin")) {
-            node->token = SIN;
+            node->token = T_SIN;
         } else if (!strcmp(buff, "cos")) {
-            node->token = COS;
+            node->token = T_COS;
         } else if (!strcmp(buff, "tan")) {
-            node->token = TAN;
+            node->token = T_TAN;
         } else if (!strcmp(buff, "ctg")) {
-            node->token = CTG;
+            node->token = T_CTG;
         } else if (!strcmp(buff, "e")) {
-            node->token = E;
+            node->token = T_E;
         } else if (!strcmp(buff, "pi")) {
-            node->token = PI;
+            node->token = T_PI;
         } else if (!strcmp(buff, "x")) {
-            node->token = X;
+            node->token = T_X;
         } else {
             return 0;
         }
@@ -90,8 +90,8 @@ Node* parse_string(const char* str) {
 }
 
 int arg_count(Token t) {
-    if (t == CONST || t == X || t == E || t == PI) { return 0; }
-    if (t == SIN || t == COS || t == TAN || t == CTG) { return 1; }
+    if (t == T_CONST || t == T_X || t == T_E || t == T_PI) { return 0; }
+    if (t == T_SIN || t == T_COS || t == T_TAN || t == T_CTG) { return 1; }
     return 2;
 }
 
@@ -102,15 +102,15 @@ void print_tree(FILE *fout, Node *n, int parentheses) {
     }
     if (arg_count(n->token) == 0) {
         switch (n->token) {
-        case CONST:
+        case T_CONST:
             fprintf(fout, "%lf", n->constant);
             break;
-        case X:
+        case T_X:
             fprintf(fout, "x");
             break;
-        case E:
+        case T_E:
             fprintf(fout, "e");
-        case PI:
+        case T_PI:
             fprintf(fout, "pi");
         default:
             break;
@@ -118,16 +118,16 @@ void print_tree(FILE *fout, Node *n, int parentheses) {
         if (!parentheses) { fprintf(fout, " "); }
     } else if (arg_count(n->token) == 1) {
         switch (n->token) {
-        case SIN:
+        case T_SIN:
             fprintf(fout, "sin");
             break;
-        case COS:
+        case T_COS:
             fprintf(fout, "cos");
             break;
-        case TAN:
+        case T_TAN:
             fprintf(fout, "tan");
             break;
-        case CTG:
+        case T_CTG:
             fprintf(fout, "ctg");
             break;
         default:
@@ -135,20 +135,20 @@ void print_tree(FILE *fout, Node *n, int parentheses) {
         }
         print_tree(fout, n->left, 1);
     } else {
-        int par = n->token == DIV || n->token == MUL;
+        int par = n->token == T_DIV || n->token == T_MUL;
         print_tree(fout, n->left, par);
 
         switch (n->token) {
-        case ADD:
+        case T_ADD:
             fprintf(fout, "+ ");
             break;
-        case SUB:
+        case T_SUB:
             fprintf(fout, "- ");
             break;
-        case DIV:
+        case T_DIV:
             fprintf(fout, "/ ");
             break;
-        case MUL:
+        case T_MUL:
             fprintf(fout, "* ");
             break;
         default:

@@ -10,12 +10,15 @@ typedef enum Token Token;
 typedef struct Node Node;
 
 enum Token {
-    ADD, SUB, DIV, MUL, SIN, COS, TAN, CTG, CONST, X, E, PI
+    T_ADD, T_SUB, T_DIV, T_MUL, T_SIN, T_COS, T_TAN, T_CTG, T_CONST, T_X, T_E, T_PI, T_LABEL
 };
 
 struct Node{
     Token token;
-    double constant;
+    union {
+        double constant;
+        int label_num;
+    };
     Node *left, *right;
 };
 

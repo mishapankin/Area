@@ -5,7 +5,7 @@
 #include "make_asm.h"
 #include "make_js.h"
 
-void compile(FILE *fin, FILE *fout, FILE *js) {
+void compile(FILE *fin, FILE *f_asm, FILE *f_js) {
     double a, b;
     fscanf(fin, "%lf%lf\n", &a, &b);
 
@@ -18,11 +18,8 @@ void compile(FILE *fin, FILE *fout, FILE *js) {
     fgets(buff, 100, fin);
     Node *tree3 = parse_string(buff);
 
-    make_js(a, b, tree1, tree2, tree3, js);
-
-    // free(tree1);
-    // free(tree2);
-    // free(tree3);
+    make_js(a, b, tree1, tree2, tree3, f_js);
+    make_asm(a, b, tree1, tree2, tree3, f_asm);
 }
 
 int main(int argv, char** argc) {

@@ -4,7 +4,7 @@ EXPR_COMPILER = exprc
 PROG_OBJECTS = obj/main.o obj/func.o obj/methods.o
 COMPILER_OBJECTS = obj/exprc.o obj/expr_tree.o obj/make_asm.o obj/make_js.o
 
-C_FLAGS = -Wall -m32 -c
+C_FLAGS = -std=c99 -Wall -m32 -c
 ASM_FLAGS = -f elf32
 LINK_FLAGS = -Wall -m32
 
@@ -32,6 +32,8 @@ obj/%.o: src/%.c
 obj/%.o: src/%.nasm
 	nasm $(ASM_FLAGS) $< -o $@
 
+src/%.nasm: src/%.expr $(EXPR_COMPILER)
+	./$(EXPR_COMPILER) $< $@
 
 src/main.c: src/func.h src/methods.h
 src/methods.c: src/methods.h
