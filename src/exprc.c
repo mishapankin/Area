@@ -20,6 +20,10 @@ void compile(FILE *fin, FILE *f_asm, FILE *f_js) {
 
     make_js(a, b, tree1, tree2, tree3, f_js);
     make_asm(a, b, tree1, tree2, tree3, f_asm);
+
+    free_tree(tree1);
+    free_tree(tree2);
+    free_tree(tree3);
 }
 
 int main(int argv, char** argc) {

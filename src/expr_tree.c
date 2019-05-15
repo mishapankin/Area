@@ -64,7 +64,6 @@ Node* parse_string(const char* str) {
             shift += n;
         } else { break; }
     }
-    nodes = realloc(nodes, cnt * sizeof(Node));
 
     Node **stack = malloc(cnt * sizeof(Node));
     Node **stack_top = stack;
@@ -85,12 +84,19 @@ Node* parse_string(const char* str) {
         }
         *stack_top = &nodes[i];
     }
+    Node *tree = *stack_top;
 
-    return *stack_top;
+    tree = alloc_tree(tree);
+    optimize_constexpr(tree);
+
+    free(nodes);
+    free(stack);
+
+    return tree;
 }
 
 int arg_count(Token t) {
-    if (t == T_CONST || t == T_X || t == T_E || t == T_PI) { return 0; }
+    if (t == T_CONST || t == T_X || t == T_E || t == T_PI || t == T_LABEL) { return 0; }
     if (t == T_SIN || t == T_COS || t == T_TAN || t == T_CTG) { return 1; }
     return 2;
 }
@@ -159,4 +165,29 @@ void print_tree(FILE *fout, Node *n, int parentheses) {
     if (parentheses) {
         fprintf(fout, ") ");
     }
+}
+
+Node* alloc_tree(Node *tree) {
+    if (!tree) { return NULL; }
+    Node *res = malloc(sizeof(Node));
+    memcpy(res, tree, sizeof(Node));
+    res->left = alloc_tree(tree->left);
+    res->right = alloc_tree(tree->right);
+    return res;
+}
+
+void free_tree(Node *tree) {
+    if (!tree) { return; }
+    free_tree(tree->left);
+    free_tree(tree->right);
+    free(tree);
+}
+
+void optimize_constexpr(Node *tree) {
+    if (!tree || arg_count(tree->token) == 0) { return; }
+    optimize_constexpr(tree->left);
+    optimize_constexpr(tree->right);
+
+    int l_const = tree->left->token == T_CONST || tree->left->token == T_E || tree->left->token == T_PI,
+        r_const = tree->right->token == T_CONST || tree->right->token == T_E || tree->right->token == T_PI;
 }
