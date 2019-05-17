@@ -12,8 +12,7 @@ section .rodata
 	b dq 3.000000
 
 	const0 dq 0.000000
-	const1 dq -0.100000
-	const2 dq 2.000000
+	const1 dq 2.000000
 
 section .text
 INIT_FPU:
@@ -37,14 +36,6 @@ f2:
 	fld qword[ebp + 8]
 	sub esp, 8
 	fstp qword[esp]
-	fld qword[const1]
-	sub esp, 8
-	fstp qword[esp]
-	fld qword[esp + 8]
-	fld qword[esp]
-	faddp
-	add esp, 8
-	fstp qword[esp]
 	fld qword[esp]
 	mov esp, ebp
 	pop ebp
@@ -64,7 +55,7 @@ f3:
 	fmulp
 	add esp, 8
 	fstp qword[esp]
-	fld qword[const2]
+	fld qword[const1]
 	sub esp, 8
 	fstp qword[esp]
 	fld qword[esp + 8]
