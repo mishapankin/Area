@@ -5,8 +5,8 @@
 #include <math.h>
 
 #include "expr_tree.h"
+#include "constants.h"
 
-#define EULER 2.718281828
 #define MAX_CONST_SIZE 100
 
 void make_asm(double a, double b, Node *tree1, Node *tree2, Node *tree3, FILE *fout) {
@@ -45,7 +45,7 @@ int fill_label_arr(int i, double *label_arr, Node *tree) {
         ++i;
     } else if (tree->token == T_E) {
         tree->token = T_LABEL;
-        label_arr[i] = EULER;
+        label_arr[i] = M_PI;
         tree->label_num = i;
         ++i;
     }

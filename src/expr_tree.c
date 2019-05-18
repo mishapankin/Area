@@ -3,10 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define _USE_MATH_DEFINES
 #include <math.h>
 
+#include "constants.h"
 
 #define MAX_TREE_SIZE 100
 
@@ -87,7 +86,7 @@ Node* parse_string(const char* str) {
     Node *tree = *stack_top;
 
     tree = alloc_tree(tree);
-    optimize_constexpr(tree);
+    // optimize_constexpr(tree);
 
     free(nodes);
     free(stack);
@@ -183,6 +182,20 @@ void free_tree(Node *tree) {
     free(tree);
 }
 
+double get_const(Node *tree) {
+    if (!tree) { return NAN; }
+    switch (tree->token) {
+    case T_CONST:
+        return tree->constant;
+    case T_E:
+        return M_E;
+    case T_PI:
+        return M_PI;
+    default:
+        return NAN;
+    }
+}
+
 void optimize_constexpr(Node *tree) {
     if (!tree || arg_count(tree->token) == 0) { return; }
     optimize_constexpr(tree->left);
@@ -190,4 +203,27 @@ void optimize_constexpr(Node *tree) {
 
     int l_const = tree->left->token == T_CONST || tree->left->token == T_E || tree->left->token == T_PI,
         r_const = tree->right->token == T_CONST || tree->right->token == T_E || tree->right->token == T_PI;
+
+    double  l_arg = get_const(tree->left),
+            r_arg = get_const(tree->right);
+
+    if (l_const && arg_count(tree->token) == 1) {
+        tree->token = T_CONST;
+        switch (tree->token) {
+        case T_SIN:
+            tree->constant = sin(l_arg);
+            break;
+        case T_COS:
+            tree->constant = cos(l_arg);
+            break;
+        case T_TAN:
+            tree->constant = tan(l_arg);            
+            break;
+        case T_CTG:
+            tree->constant = 1.0 / tan(l_arg);
+            break;
+        default:
+            break;
+        }
+    }
 }

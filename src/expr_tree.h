@@ -25,6 +25,7 @@ struct Node{
 Node* alloc_tree(Node *tree);
 void free_tree(Node *tree);
 void optimize_constexpr(Node *tree);
+double get_const(Node *tree);
 
 int read_node(Node* node, const char *str);
 Node* parse_string(const char* str);
