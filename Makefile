@@ -14,10 +14,8 @@ run: $(TARGET)
 	./$(TARGET)
 
 clean:
-	rm -rf obj/*
-	rm -rf bin/*
-	rm -rf ./$(TARGET)
-	rm -rf ./$(EXPR_COMPILER)
+	find bin/ -name "*" -type f | grep -v "bin/.gitkeep" | xargs rm -f
+	find obj/ -name "*" -type f | grep -v "obj/.gitkeep" | xargs rm -f
 
 .PHONY: all clean run
 
