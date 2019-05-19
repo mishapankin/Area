@@ -12,8 +12,6 @@ int main(int argc, char** argv) {
 
 	double eps = 1e-4;
 
-	printf("%lf \n", f1(5));
-
 	double	x12 = root(f1, f2, a, b, eps),
 			x23 = root(f2, f3, a, b, eps),
 			x31 = root(f3, f1, a, b, eps);

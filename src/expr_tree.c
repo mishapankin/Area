@@ -86,7 +86,7 @@ Node* parse_string(const char* str) {
     Node *tree = *stack_top;
 
     tree = alloc_tree(tree);
-    // optimize_constexpr(tree);
+    optimize_constexpr(tree);
 
     free(nodes);
     free(stack);
@@ -201,14 +201,10 @@ void optimize_constexpr(Node *tree) {
     optimize_constexpr(tree->left);
     optimize_constexpr(tree->right);
 
-    int l_const = tree->left->token == T_CONST || tree->left->token == T_E || tree->left->token == T_PI,
-        r_const = tree->right->token == T_CONST || tree->right->token == T_E || tree->right->token == T_PI;
-
     double  l_arg = get_const(tree->left),
             r_arg = get_const(tree->right);
 
-    if (l_const && arg_count(tree->token) == 1) {
-        tree->token = T_CONST;
+    if (!isnan(l_arg) && arg_count(tree->token) == 1) {
         switch (tree->token) {
         case T_SIN:
             tree->constant = sin(l_arg);
@@ -225,5 +221,39 @@ void optimize_constexpr(Node *tree) {
         default:
             break;
         }
+        tree->token = T_CONST;
+        free_tree(tree->left);
+        tree->left = NULL;
+        return;
+    }
+
+    if (!isnan(l_arg) && !isnan(r_arg) && arg_count(tree->token) == 2) {
+        switch (tree->token) {
+        case T_ADD:
+            tree->constant = l_arg + r_arg;
+            break;
+        case T_SUB:
+            tree->constant = l_arg - r_arg;
+            break;
+        case T_MUL:
+            tree->constant = l_arg * r_arg;
+            break;
+        case T_DIV:
+            tree->constant = l_arg / r_arg;
+            break;
+        default:
+            break;
+        }
+        tree->token = T_CONST;
+        free_tree(tree->left);
+        tree->left = NULL;
+        free_tree(tree->right);
+        tree->right = NULL;
+        return;
+    }
+
+    if (tree->token == T_SUB && !isnan(r_arg) && r_arg < 0) {
+        tree->token = T_ADD;
+        tree->right->constant *= -1;
     }
 }
