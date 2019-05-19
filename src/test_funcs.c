@@ -35,8 +35,29 @@ double t_f5(double x) {
 	return 1.0 / x;
 }
 
+
+void test_root(char **arguments, int human, double EPS) {
+    int num1, num2, it;
+    double a, b;
+    sscanf(arguments[0], "%d", &num1);
+    sscanf(arguments[1], "%d", &num2);
+    sscanf(arguments[2], "%lf", &a);
+    sscanf(arguments[3], "%lf", &b);
+    --num1; --num2;
+    double x = root(func_arr[num1], func_arr[num2], a, b, EPS, &it);
+    if (human) {
+        printf("%s\n", func_str_arr[num1]);
+        printf("%s\n", func_str_arr[num2]);
+        printf("a: %lf\n", a);
+        printf("b: %lf\n", b);
+        printf("Root: ");
+    }
+    printf("%lf\n", x);
+}
+
+
 void test_integral(char **arguments, int human, double EPS) {
-    int num;
+    int num, it;
     double a, b;
     sscanf(arguments[0], "%d", &num);
     sscanf(arguments[1], "%lf", &a);
@@ -50,23 +71,4 @@ void test_integral(char **arguments, int human, double EPS) {
         printf("Integral: ");
     }
     printf("%lf\n", area);
-}
-
-void test_root(char **arguments, int human, double EPS) {
-    int num1, num2;
-    double a, b;
-    sscanf(arguments[0], "%d", &num1);
-    sscanf(arguments[1], "%d", &num2);
-    sscanf(arguments[2], "%lf", &a);
-    sscanf(arguments[3], "%lf", &b);
-    --num1; --num2;
-    double x = root(func_arr[num1], func_arr[num2], a, b, EPS);
-    if (human) {
-        printf("%s\n", func_str_arr[num1]);
-        printf("%s\n", func_str_arr[num2]);
-        printf("a: %lf\n", a);
-        printf("b: %lf\n", b);
-        printf("Root: ");
-    }
-    printf("%lf\n", x);
 }

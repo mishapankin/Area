@@ -1,22 +1,24 @@
 #include <math.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #include "func.h"
 #include "methods.h"
 #include "parse_args.h"
 #include "test_funcs.h"
 
-extern const double a;
-extern const double b;
+extern const double a;			// Left bound. Initialization in func.nasm
+extern const double b;			// Right bount. Initialization in func.nasm
 
-const double EPS = 1e-4;
+const double EPS = 1e-4;		// Calculation error
 
-void help(void) {
+void help(char *current_dir) {
 	puts("Calculates area of a figure bounded by graphs of 3 functions.");
-	puts("Plot of graph is on ./html/graph.html");
+	printf("Plot of graph is on file://%s/html/graph.html\n", current_dir);
 	puts("Arguments:");
 	puts("\t--help, -h\t\t\tShow this help");
 	puts("\t--human\t\t\t\tPrint with explaining text.");
+	puts("\t--iter\t\t\t\tPrint count of iterations.");
 	puts("\t--ti NUM A B\t\t\tGet value of integral #NUM from A to B.");
 	puts("\t--tr NUM1 NUM2 A B\t\tFind x of intersection of functions #NUM1 and #NUM2.");
 	puts("\nTest functions are:");
@@ -27,10 +29,15 @@ void help(void) {
 
 int main(int argc, char** argv) {
 	INIT_FPU();
-	int human = has_flag(argc, argv, "--human");
+	
+	int	human = has_flag(argc, argv, "--human"),
+		iter  = has_flag(argc, argv, "--iter");
+
+	char current_dir[100];
+	getcwd(current_dir, 100);
 
 	if (has_flag(argc, argv, "--help") || has_flag(argc, argv, "-h")) {
-		help();
+		help(current_dir);
 		return 0;
 	}
 
@@ -54,13 +61,21 @@ int main(int argc, char** argv) {
 		return 0;
 	}
 
-	double	x12 = root(f1, f2, a, b, EPS),
-			x23 = root(f2, f3, a, b, EPS),
-			x31 = root(f3, f1, a, b, EPS);
+	int it12, it23, it31;
+	double	x12 = root(f1, f2, a, b, EPS, &it12),
+			x23 = root(f2, f3, a, b, EPS, &it23),
+			x31 = root(f3, f1, a, b, EPS, &it31);
 
 	double area = fabs(integral(f1, x31, x12, EPS) + integral(f2, x12, x23, EPS) + integral(f3, x23, x31, EPS));
 
 	if (human) {
+		printf("Plot is in file://%s/html/graph.html\n\n", current_dir);
+		if (iter) {
+			printf("x12 found in %d iterations\n", it12);
+			printf("x23 found in %d iterations\n", it23);
+			printf("x31 found in %d iterations\n", it31);
+			puts("");
+		}
 		printf("x12: %lf\n", x12);
 		printf("x23: %lf\n", x23);
 		printf("x31: %lf\n", x31);
