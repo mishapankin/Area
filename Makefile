@@ -1,5 +1,5 @@
-TARGET = prog
-EXPR_COMPILER = exprc
+TARGET = bin/prog
+EXPR_COMPILER = bin/exprc
 
 PROG_OBJECTS = obj/main.o obj/func.o obj/methods.o
 COMPILER_OBJECTS = obj/exprc.o obj/expr_tree.o obj/make_asm.o obj/make_js.o
@@ -15,6 +15,7 @@ run: $(TARGET)
 
 clean:
 	rm -rf obj/*
+	rm -rf bin/*
 	rm -rf ./$(TARGET)
 	rm -rf ./$(EXPR_COMPILER)
 
