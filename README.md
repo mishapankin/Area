@@ -1,1 +1,3 @@
-## Area
+# Area
+
+![Makefile diagram](diagram.jpg)
