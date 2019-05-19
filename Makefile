@@ -37,7 +37,10 @@ src/%.nasm: src/%.expr $(EXPR_COMPILER)
 	./$(EXPR_COMPILER) $< $@ $(JS_LOC)
 
 src/main.o: src/func.h src/methods.h src/parse_args.h src/test_funcs.h
-src/methods.o: src/methods.h src/constants.h src/parse_args.h
+src/func.o: src/func.h
+src/methods.o: src/methods.h
+src/parse_args.o: src/parse_args.h
+src/test_funcs.o: src/test_funcs.h
 
 src/exprc.o: src/expr_tree.h src/make_js.h src/make_asm.h
 src/expr_tree.o: src/expr_tree.h
