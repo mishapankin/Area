@@ -28,8 +28,7 @@ void compile(FILE *fin, FILE *f_asm, FILE *f_js) {
 }
 
 int main(int argv, char** argc) {
-    FILE *fin = fopen(argc[1], "r"), *fout = fopen(argc[2], "w");
-    FILE *js = fopen("html/expr.js", "w");
+    FILE *fin = fopen(argc[1], "r"), *fout = fopen(argc[2], "w"), *js = fopen(argc[3], "w");
 
     compile(fin, fout, js);
 

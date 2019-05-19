@@ -8,10 +8,12 @@ C_FLAGS = -std=c99 -Wall -m32 -c
 ASM_FLAGS = -f elf32
 LINK_FLAGS = -Wall -m32 -lm
 
+JS_LOC = html/expr.js
+
 all: $(TARGET) $(EXPR_COMPILER)
 
 run: $(TARGET)
-	./$(TARGET)
+	./$(TARGET) --human
 
 clean:
 	find bin/ -name "*" -type f | grep -v "bin/.gitkeep" | xargs rm -f
@@ -32,7 +34,7 @@ obj/%.o: src/%.nasm
 	nasm $(ASM_FLAGS) $< -o $@
 
 src/%.nasm: src/%.expr $(EXPR_COMPILER)
-	./$(EXPR_COMPILER) $< $@
+	./$(EXPR_COMPILER) $< $@ $(JS_LOC)
 
 src/main.c: src/func.h src/methods.h src/parse_args.h src/test_funcs.h
 src/methods.c: src/methods.h src/constants.h src/parse_args.h
