@@ -36,7 +36,7 @@ double t_f5(double x) {
 }
 
 
-void test_root(char **arguments, int human, double EPS) {
+void test_root(char **arguments, int human, double EPS, int iter) {
     int num1, num2, it;
     double a, b;
     sscanf(arguments[0], "%d", &num1);
@@ -50,6 +50,9 @@ void test_root(char **arguments, int human, double EPS) {
         printf("%s\n", func_str_arr[num2]);
         printf("a: %lf\n", a);
         printf("b: %lf\n", b);
+        if (iter) {
+            printf("Iterations: %d\n", it);
+        }
         printf("Root: ");
     }
     printf("%lf\n", x);

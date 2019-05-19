@@ -19,8 +19,8 @@ void help(char *current_dir) {
 	puts("\t--help, -h\t\t\tShow this help");
 	puts("\t--human\t\t\t\tPrint with explaining text.");
 	puts("\t--iter\t\t\t\tPrint count of iterations.");
-	puts("\t--ti NUM A B\t\t\tGet value of integral #NUM from A to B.");
-	puts("\t--tr NUM1 NUM2 A B\t\tFind x of intersection of functions #NUM1 and #NUM2.");
+	puts("\t--ti NUM A B\t\t\tGet value of integral NUM from A to B.");
+	puts("\t--tr NUM1 NUM2 A B\t\tFind x of intersection of functions NUM1 and NUM2.");
 	puts("\nTest functions are:");
 	for (int i = 0; i < 5; ++i) {
 		printf("\t%s\n", func_str_arr[i]);
@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
 		if (!arguments) {
 			puts(human? "Uncorrect arguments": "Nan");
 		} else {
-			test_root(arguments, human, EPS);
+			test_root(arguments, human, EPS, iter);
 		}
 		return 0;
 	}
