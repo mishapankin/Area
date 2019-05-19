@@ -1,8 +1,8 @@
 TARGET = bin/prog
 EXPR_COMPILER = bin/exprc
 
-PROG_OBJECTS = obj/main.o obj/func.o obj/methods.o
-COMPILER_OBJECTS = obj/exprc.o obj/expr_tree.o obj/make_asm.o obj/make_js.o
+PROG_OBJECTS = obj/main.o obj/func.o obj/methods.o obj/parse_args.o obj/test_funcs.o
+COMPILER_OBJECTS = obj/exprc.o obj/expr_tree.o obj/make_asm.o obj/make_js.o obj/parse_args.o
 
 C_FLAGS = -std=c99 -Wall -m32 -c
 ASM_FLAGS = -f elf32
@@ -34,8 +34,8 @@ obj/%.o: src/%.nasm
 src/%.nasm: src/%.expr $(EXPR_COMPILER)
 	./$(EXPR_COMPILER) $< $@
 
-src/main.c: src/func.h src/methods.h
-src/methods.c: src/methods.h src/constants.h
+src/main.c: src/func.h src/methods.h src/parse_args.h src/test_funcs.h
+src/methods.c: src/methods.h src/constants.h src/parse_args.h
 
 src/exprc.c: src/expr_tree.h src/make_js.h src/make_asm.h
 src/expr_tree.c: src/expr_tree.h

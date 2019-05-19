@@ -3,22 +3,69 @@
 
 #include "func.h"
 #include "methods.h"
+#include "parse_args.h"
+#include "test_funcs.h"
 
 extern const double a;
 extern const double b;
 
+const double EPS = 1e-4;
+
+void help(void) {
+	puts("Calculates area of a figure bounded by graphs of 3 functions.");
+	puts("Plot of graph is on ./html/graph.html");
+	puts("Arguments:");
+	puts("\t--help, -h\t\t\tShow this help");
+	puts("\t--human\t\t\t\tPrint with explaining text.");
+	puts("\t--ti NUM A B\t\t\tGet value of integral #NUM from A to B.");
+	puts("\t--tr NUM1 NUM2 A B\t\tFind x of intersection of functions #NUM1 and #NUM2.");
+	puts("\nTest functions are:");
+	for (int i = 0; i < 5; ++i) {
+		printf("\t%s\n", func_str_arr[i]);
+	}
+}
+
 int main(int argc, char** argv) {
 	INIT_FPU();
+	int human = has_flag(argc, argv, "--human");
 
-	double eps = 1e-4;
+	if (has_flag(argc, argv, "--help") || has_flag(argc, argv, "-h")) {
+		help();
+		return 0;
+	}
 
-	double	x12 = root(f1, f2, a, b, eps),
-			x23 = root(f2, f3, a, b, eps),
-			x31 = root(f3, f1, a, b, eps);
+	if (has_flag(argc, argv, "--ti")) {
+		char **arguments = get_flag(argc, argv, "--ti", 3);
+		if (!arguments) {
+			puts(human? "Uncorrect arguments": "Nan");
+		} else {
+			test_integral(arguments, human, EPS);
+		}
+		return 0;
+	}
 
-	double area = fabs(integral(f1, x31, x12, eps) + integral(f2, x12, x23, eps) + integral(f3, x23, x31, eps));
+	if (has_flag(argc, argv, "--tr")) {
+		char **arguments = get_flag(argc, argv, "--tr", 4);
+		if (!arguments) {
+			puts(human? "Uncorrect arguments": "Nan");
+		} else {
+			test_root(arguments, human, EPS);
+		}
+		return 0;
+	}
 
-	printf("%lf %lf %lf\n", x12, x23, x31);
+	double	x12 = root(f1, f2, a, b, EPS),
+			x23 = root(f2, f3, a, b, EPS),
+			x31 = root(f3, f1, a, b, EPS);
+
+	double area = fabs(integral(f1, x31, x12, EPS) + integral(f2, x12, x23, EPS) + integral(f3, x23, x31, EPS));
+
+	if (human) {
+		printf("x12: %lf\n", x12);
+		printf("x23: %lf\n", x23);
+		printf("x31: %lf\n", x31);
+		printf("\nArea: ");
+	}
 	printf("%lf\n", area);
 	
 	return 0;

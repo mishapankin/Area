@@ -4,6 +4,7 @@
 #include "expr_tree.h"
 #include "make_asm.h"
 #include "make_js.h"
+#include "parse_args.h"
 
 void compile(FILE *fin, FILE *f_asm, FILE *f_js) {
     double a, b;
