@@ -57,7 +57,7 @@ void test_root(char **arguments, int human, double EPS) {
 
 
 void test_integral(char **arguments, int human, double EPS) {
-    int num, it;
+    int num;
     double a, b;
     sscanf(arguments[0], "%d", &num);
     sscanf(arguments[1], "%lf", &a);
