@@ -38,7 +38,7 @@ double integral(func_t f, double a, double b, double eps) {
 	}
 
 	double prev = 0.0, result = 0.0;
-	int n = 1;
+	int n = 100;
 	
 	do {
 		double dx = (b - a) / n;

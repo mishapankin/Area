@@ -1,5 +1,6 @@
 TARGET = bin/prog
 EXPR_COMPILER = bin/exprc
+JS_LOC = html/expr.js
 
 PROG_OBJECTS = obj/main.o obj/func.o obj/methods.o obj/parse_args.o obj/test_funcs.o
 COMPILER_OBJECTS = obj/exprc.o obj/expr_tree.o obj/make_asm.o obj/make_js.o
@@ -8,7 +9,6 @@ C_FLAGS = -std=c99 -Wall -m32 -c
 ASM_FLAGS = -f elf32
 LINK_FLAGS = -Wall -m32 -lm
 
-JS_LOC = html/expr.js
 
 all: $(TARGET) $(EXPR_COMPILER)
 

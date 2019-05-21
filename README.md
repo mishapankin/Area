@@ -73,4 +73,6 @@ Iterations: 37
 Root: 1.114152
 ```
 
+## Project structure
+
 ![Makefile diagram](diagram.jpg)

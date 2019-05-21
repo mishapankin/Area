@@ -5,6 +5,7 @@
 #include "make_asm.h"
 #include "make_js.h"
 
+/// Считывает fin и строит файлы f_asm и f_js.
 void compile(FILE *fin, FILE *f_asm, FILE *f_js) {
     double a, b;
     fscanf(fin, "%lf%lf\n", &a, &b);
@@ -26,6 +27,7 @@ void compile(FILE *fin, FILE *f_asm, FILE *f_js) {
     free_tree(tree3);
 }
 
+/// Точка входа. Разбирает аргументы командной строки и запускает compile.
 int main(int argv, char** argc) {
     FILE *fin = fopen(argc[1], "r"), *fout = fopen(argc[2], "w"), *js = fopen(argc[3], "w");
 

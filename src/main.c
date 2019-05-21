@@ -7,11 +7,12 @@
 #include "parse_args.h"
 #include "test_funcs.h"
 
-extern const double a;			// Left bound. Initialization in func.nasm
-extern const double b;			// Right bount. Initialization in func.nasm
+extern const double a;			// Левая граница. Инициализируется в func.nasm
+extern const double b;			// Правая граница. Инициализируется в func.nasm
 
-const double EPS = 1e-4;		// Calculation error
+const double EPS = 1e-4;		// Погрешность.
 
+/// Выводит информацию о программе и принимаемые аргументы командной строки.
 void help(char *current_dir) {
 	puts("Calculates area of a figure bounded by graphs of 3 functions.");
 	printf("Plot of graph is on file://%s/html/graph.html\n", current_dir);
@@ -27,6 +28,9 @@ void help(char *current_dir) {
 	}
 }
 
+/// Точка входу в программу.
+/// Разбирает аргументы командной строки и в зависимости от них
+/// запускает соответствующий режим работы.
 int main(int argc, char** argv) {
 	INIT_FPU();
 	
