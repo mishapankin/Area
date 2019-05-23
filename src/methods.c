@@ -14,6 +14,9 @@ double root(func_t f, func_t g, double a, double b, double eps, int *it_count) {
 		++(*it_count);
 		double	x = (v_a * a - v_b * b) / (v_a - v_b),
 				v_x = f(x) - g(x);
+		if (fabs(v_x) < eps) {
+			return x;
+		}
 		if (v_x * v_a > 0) {
 			a = x;
 			v_a = v_x;
