@@ -10,7 +10,7 @@
 extern const double a;			// Левая граница. Инициализируется в func.nasm
 extern const double b;			// Правая граница. Инициализируется в func.nasm
 
-const double EPS = 1e-4;		// Погрешность.
+const double EPS = 1e-5;		// Погрешность.
 
 /// Выводит информацию о программе и принимаемые аргументы командной строки.
 void help(char *current_dir) {
